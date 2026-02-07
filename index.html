@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>指宿沖の・レッドモンスターを釣れ！ Red Monster Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="flash-overlay"></div>
+    <div id="unlock-banner">NEW UNLOCK!</div>
+    <div id="btn-mute" onclick="toggleMute()">🔊</div>
+
+    <div id="start-screen">
+        <div id="kuromi-banner" style="margin-bottom: 20px;">
+            <img src="kuromi_title_deco.png" id="kuromi-img"
+                style="width: 150px; filter: drop-shadow(0 0 15px rgba(153, 50, 204, 0.6));">
+        </div>
+        <h2 style="color:#9932cc; text-shadow: 0 0 15px rgba(153, 50, 204, 0.8); font-size: 1.8rem;">Kuromi × ティップラン
+        </h2>
+        <h3 style="color:#00d2ff; margin-top: -10px; font-size: 1rem; opacity: 0.8;">指宿沖の・レッドモンスターを釣れ</h3>
+        <div class="select-group"><label>釣り場</label><select id="select-location"></select></div>
+        <div class="select-group"><label>ロッド</label><select id="select-rod"></select></div>
+        <div class="select-group"><label>リール</label><select id="select-reel"></select></div>
+        <button onclick="startGame()"
+            style="background:#00d2ff; width:200px; height:50px; margin-top:20px;">釣り開始！</button>
+        <button class="btn-reset" onclick="resetGameData()">セーブデータを初期化する</button>
+    </div>
+
+    <div id="collection-modal" class="modal">
+        <h3>🦑 釣果図鑑</h3>
+        <div id="collection-list"></div>
+        <button onclick="toggleModal('collection-modal')"
+            style="background:#444; color:white; width:100%; padding:10px; margin-top:10px;">閉じる</button>
+    </div>
+
+    <div id="shop-modal" class="modal">
+        <h3>🛒 エギショップ</h3>
+        <div
+            style="background: #001529; padding: 5px; border-radius: 5px; margin-bottom: 10px; color: #ffcc00; font-weight: bold;">
+            所持金: <span id="shop-money">0</span> G</div>
+        <div id="shop-list"></div>
+        <button onclick="toggleModal('shop-modal')"
+            style="background:#444; color:white; width:100%; padding:10px; margin-top:10px;">閉じる</button>
+    </div>
+
+    <div id="info">
+        <div id="display-loc" class="location-tag">未選択</div>
+        <div id="status-msg">エリアを選択してください</div>
+        <div id="gauge-container">
+            <div id="gauge-bar"></div>
+        </div>
+        <div class="stats" style="font-size: 0.9rem; color: #00d2ff;">
+            <span id="current-depth">0.0</span>m / <span id="target-depth">--</span>m | 釣果: <span
+                id="score-val">0</span> 杯
+            <br>
+            <span style="color: #ffcc00;">所持金: <span id="money-val">0</span> G</span>
+            <br>
+            <button class="btn-sub" onclick="toggleModal('collection-modal')">🦑 図鑑</button>
+            <button class="btn-sub" onclick="toggleModal('shop-modal')" style="background: #e67e22;">🛒 ショップ</button>
+            <button class="btn-sub" onclick="showStartScreen()" style="background:#444;">⚙ 設定</button>
+        </div>
+        <div id="tackle-display">
+            <span>竿: <span id="disp-rod">--</span></span>
+            <span>糸巻: <span id="disp-reel">--</span></span>
+            <span>餌木: <span id="disp-egi">--</span></span>
+        </div>
+        <div id="dist-container" style="display:none; color: #ff416c; font-weight:bold;">残り: <span
+                id="dist-val">--</span>m</div>
+    </div>
+
+    <div id="canvas-container">
+        <div id="reel-visual" style="display:none;">
+            <canvas id="reelCanvas" width="180" height="180"></canvas>
+        </div>
+        <canvas id="gameCanvas" width="600" height="400"></canvas>
+    </div>
+
+    <div class="controls">
+        <button id="btn-fall" class="btn-action" onclick="actionFall()">フォール</button>
+        <button id="btn-jerk" class="btn-action" onclick="actionJerk()" disabled>シャクリ</button>
+        <button id="btn-stay" class="btn-action" onclick="actionStay()" disabled>ステイ</button>
+        <button id="btn-retrieve" class="btn-action" style="background: linear-gradient(135deg, #2ecc71, #27ae60);"
+            onclick="actionRetrieve()" disabled>回収</button>
+        <button id="btn-hook" class="btn-hook btn-full" onclick="actionHook()">💥 合わせ！</button>
+        <button id="btn-reel" class="btn-fight btn-full">🎣 リールを巻く</button>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>
